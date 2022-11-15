@@ -1834,7 +1834,7 @@ var DefaultUrlDecode =[
 			}]
 		},
 		{
-			keyword: "https://cjhy-isv.isvjcloud.com/wxDrawActivity/activity/",
+			keyword: "https://cjhy-isv.isvjcloud.com/wxDrawActivity/",
 			name: "CJ幸运抽奖",
 			trans: [{
 				ori: "activityId",
@@ -1915,7 +1915,14 @@ var DefaultUrlDecode =[
 				redi: "jd_txzj_lottery_id"
 			}]
 		},
-
+		{
+			keyword: "https://cjhy-isv.isvjcloud.com/wxShopFollowActivity/activity",
+			name: "cjhy关注店铺有礼",
+			trans: [{
+				ori: "activityId",
+				redi: "jd_cjhy_wxShopFollowActivity_activityId"
+			}]
+		},
 
 
 
