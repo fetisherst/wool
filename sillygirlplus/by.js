@@ -1518,7 +1518,6 @@ var DefaultUrlDecode =[
 			}]
 		},
 
-
 		{
 			keyword: "wxCollectionActivity/activity",
 			name: "加购有礼",
@@ -1610,18 +1609,18 @@ var DefaultUrlDecode =[
 
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/sign/signActivity",
-			name: "CJ超级店铺无线签到",
+			name: "cjhy签到有礼",
 			trans: [{
 				ori: "activityId",
-				redi: "CJHY_SIGN"
+				redi: "jd_cjhy_signActivity_ids"//环保
 			}]
 		},
 		{
 			keyword: /https:\/\/cjhy-isv.isvj(clou)?d.com\/sign\/sevenDay\/signActivity/,
-			name: "CJ超级店铺无线签到",
+			name: "cjhy七日签到",
 			trans: [{
 				ori: "activityId",
-				redi: "CJHY_SEVENDAY"
+				redi: "jd_cjhy_sevenDay_ids"//环保
 			}]
 		},
 		{
@@ -1667,10 +1666,10 @@ var DefaultUrlDecode =[
 
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/mc/wxMcLevelAndBirthGifts/activity",
-			name: "CJ生日礼包和会员等级礼包",
+			name: "CJ生日礼",
 			trans: [{
 				ori: "activityId",
-				redi: "jd_wxMcLevelAndBirthGifts_activityId"
+				redi: "jd_cjhy_wxMcLevelAndBirthGifts_ids"//环保
 			}]
 		},
 
@@ -1703,18 +1702,18 @@ var DefaultUrlDecode =[
 
 		{
 			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxShopGift/,
-			name: "LZ特效店铺有礼",
+			name: "lzkj店铺礼包",
 			trans: [{
 				ori: "-1",
-				redi: "jd_wxShopGift_activityUrl"//kr
+				redi: "jd_lzkj_wxShopGift_ids"//环保
 			}]
 		},
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/wxShopGift/activity",
-			name: "CJ特效店铺有礼",
+			name: "cjhy店铺礼包",
 			trans: [{
 				ori: "-1",
-				redi: "jd_wxShopGift_activityUrl"//kr
+				redi: "jd_wxShopGift_activityUrl"//环保
 			}]
 		},
 
@@ -1751,7 +1750,6 @@ var DefaultUrlDecode =[
 			}]
 		},
 
-
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/wxInviteActivity/openCard/invitee",
 			name: "CJ开卡入会有礼",
@@ -1779,19 +1777,10 @@ var DefaultUrlDecode =[
 			}]
 		},
 
-
 	
 	/*******************环境保护库********************** */	
 		{
-			keyword: "https://lzkj-isv.isvjd.com/wxShopFollowActivity",
-			name: "lzkj关注店铺有礼",
-			trans: [{
-				ori: "activityId",
-				redi: "jd_lzkj_wxShopFollowActivity_activityId"//环保
-			}]
-		},
-		{
-			keyword: "https://lzkj-isv.isvjcloud.com/wxShopFollowActivity",
+			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxShopFollowActivity/,
 			name: "lzkj关注店铺有礼",
 			trans: [{
 				ori: "activityId",
@@ -1809,37 +1798,23 @@ var DefaultUrlDecode =[
 		},
 	
 		{
-			keyword: "https://lzkj-isv.isvjcloud.com/wxCollectionActivity/activity2",
+			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxCollectionActivity\/activity2/,
 			name: "lzkj加购物车抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_lzkj_wxCollectionActivityId"//环保
 			}]
 		},
+
 		{
-			keyword: "https://lzkj-isv.isvjd.com/wxCollectionActivity/activity2",
-			name: "lzkj加购物车抽奖",
-			trans: [{
-				ori: "activityId",
-				redi: "jd_lzkj_wxCollectionActivityId"//环保
-			}]
-		},
-		{
-			keyword: "https://cjhy-isv.isvjcloud.com/wxCollectionActivity/activity",
+			keyword: /https:\/\/cjhy-isv.isvj(clou)?d.com\/wxCollectionActivity\/activity/,
 			name: "cjhy加购物车抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_cjhy_wxCollectionActivityId"//环保
 			}]
 		},
-		{
-			keyword: "https://cjhy-isv.isvjd.com/wxCollectionActivity/activity",
-			name: "cjhy加购物车抽奖",
-			trans: [{
-				ori: "activityId",
-				redi: "jd_cjhy_wxCollectionActivityId"//环保
-			}]
-		},
+
 		{
 			keyword: "https://lzkj-isv.isvjcloud.com/lzclient/",
 			name: "LZ幸运抽奖",
@@ -1849,21 +1824,14 @@ var DefaultUrlDecode =[
 			}]
 		},
 		{
-			keyword: "https://lzkj-isv.isvjcloud.com/wxDrawActivity/",
+			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxDrawActivity/,
 			name: "lzkj幸运抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_lzkj_wxDrawActivity_Id"//环保
 			}]
 		},
-		{
-			keyword: "https://lzkj-isv.isvjd.com/wxDrawActivity/",
-			name: "lzkj幸运抽奖",
-			trans: [{
-				ori: "activityId",
-				redi: "jd_lzkj_wxDrawActivity_Id"//环保
-			}]
-		},
+
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/wxDrawActivity/",
 			name: "CJ幸运抽奖",
@@ -1873,15 +1841,7 @@ var DefaultUrlDecode =[
 			}]
 		},
 		{
-			keyword: "https://lzkj-isv.isvjcloud.com/wxGameActivity/activity/activity",
-			name: "LZ游戏活动",
-			trans: [{
-				ori: "activityId",
-				redi: "jd_lzkj_wxGameActivity_activityId"//环保
-			}]
-		},
-		{
-			keyword: "https://lzkj-isv.isvjd.com/wxGameActivity/activity/activity",
+			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxGameActivity\/activity/,
 			name: "LZ游戏活动",
 			trans: [{
 				ori: "activityId",
