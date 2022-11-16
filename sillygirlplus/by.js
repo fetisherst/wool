@@ -1626,18 +1626,18 @@ var DefaultUrlDecode =[
 		},
 		{
 			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/sign\/signActivity/,
-			name: "LZ超级店铺无线签到",
+			name: "lzkj签到有礼",
 			trans: [{
 				ori: "activityId",
-				redi: "LZKJ_SIGN"
+				redi: "jd_lzkj_signActivity2_ids"//环保
 			}]
 		},
 		{
 			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/sign\/sevenDay/,
-			name: "LZ超级店铺无线签到",
+			name: "lzkj七日签到",
 			trans: [{
 				ori: "activityId",
-				redi: "LZKJ_SEVENDAY"
+				redi: "jd_lzkj_sevenDay_ids"//环保
 			}]
 		},
 
@@ -1784,18 +1784,18 @@ var DefaultUrlDecode =[
 	/*******************环境保护库********************** */	
 		{
 			keyword: "https://lzkj-isv.isvjd.com/wxShopFollowActivity",
-			name: "LZ店铺关注抽奖",
+			name: "lzkj关注店铺有礼",
 			trans: [{
 				ori: "activityId",
-				redi: "jd_wxShopFollowActivity_activityId"
+				redi: "jd_lzkj_wxShopFollowActivity_activityId"//环保
 			}]
 		},
 		{
 			keyword: "https://lzkj-isv.isvjcloud.com/wxShopFollowActivity",
-			name: "LZ店铺关注抽奖",
+			name: "lzkj关注店铺有礼",
 			trans: [{
 				ori: "activityId",
-				redi: "jd_wxShopFollowActivity_activityId"
+				redi: "jd_lzkj_wxShopFollowActivity_activityId"//环保
 			}]
 		},
 
@@ -1810,16 +1810,31 @@ var DefaultUrlDecode =[
 	
 		{
 			keyword: "https://lzkj-isv.isvjcloud.com/wxCollectionActivity/activity2",
-			name: "LZ加购有礼",
+			name: "lzkj加购物车抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_lzkj_wxCollectionActivityId"//环保
 			}]
 		},
-
+		{
+			keyword: "https://lzkj-isv.isvjd.com/wxCollectionActivity/activity2",
+			name: "lzkj加购物车抽奖",
+			trans: [{
+				ori: "activityId",
+				redi: "jd_lzkj_wxCollectionActivityId"//环保
+			}]
+		},
 		{
 			keyword: "https://cjhy-isv.isvjcloud.com/wxCollectionActivity/activity",
-			name: "CJ加购有礼",
+			name: "cjhy加购物车抽奖",
+			trans: [{
+				ori: "activityId",
+				redi: "jd_cjhy_wxCollectionActivityId"//环保
+			}]
+		},
+		{
+			keyword: "https://cjhy-isv.isvjd.com/wxCollectionActivity/activity",
+			name: "cjhy加购物车抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_cjhy_wxCollectionActivityId"//环保
@@ -1828,6 +1843,22 @@ var DefaultUrlDecode =[
 		{
 			keyword: "https://lzkj-isv.isvjcloud.com/lzclient/",
 			name: "LZ幸运抽奖",
+			trans: [{
+				ori: "activityId",
+				redi: "jd_lzkj_wxDrawActivity_Id"//环保
+			}]
+		},
+		{
+			keyword: "https://lzkj-isv.isvjcloud.com/wxDrawActivity/",
+			name: "lzkj幸运抽奖",
+			trans: [{
+				ori: "activityId",
+				redi: "jd_lzkj_wxDrawActivity_Id"//环保
+			}]
+		},
+		{
+			keyword: "https://lzkj-isv.isvjd.com/wxDrawActivity/",
+			name: "lzkj幸运抽奖",
 			trans: [{
 				ori: "activityId",
 				redi: "jd_lzkj_wxDrawActivity_Id"//环保
