@@ -1798,7 +1798,7 @@ var DefaultUrlDecode =[
 		},
 	
 		{
-			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxCollectionActivity\/activity2/,
+			keyword: /https:\/\/lzkj-isv.isvj(clou)?d.com\/wxCollectionActivity\/activity/,
 			name: "lzkj加购物车抽奖",
 			trans: [{
 				ori: "activityId",
