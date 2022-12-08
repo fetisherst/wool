@@ -1886,7 +1886,7 @@ var DefaultUrlDecode =[
 		},
 	
 		{
-			keyword: "https://lzkj-isv.isvjcloud.com/wxCollectionActivity/activity2",
+			keyword: /https:\/\/lzkj-isv\.isvj(clou)?d\.com\/wxCollectionActivity\/activity2/,
 			name: "LZ加购有礼",
 			trans: [{
 				ori: "activityId",
