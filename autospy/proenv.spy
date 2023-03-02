@@ -74,7 +74,7 @@ js_config:
   - - jd_cjhy_activityId
   - - jd_cjhydz_wxTeam_Id
   Name: CJ组队瓜分
-  Script: jd_cjzdgf.js
+  Script: jd_cjhydz_wxTeam.js
   TimeOut: 0
   Wait: 5
 - Container:
@@ -85,7 +85,7 @@ js_config:
   - - jd_zdjr_activityId
   - - jd_lzkjdz_wxTeam_Id
   Name: LZ组队瓜分
-  Script: jd_zdjr.js
+  Script: jd_lzkjdz_wxTeam.js
   TimeOut: 0
   Wait: 5
 - Container:
@@ -140,7 +140,7 @@ js_config:
   - - jd_wdz_activityId
   - - jd_cjhydz_microDz_Id
   Name: 微定制
-  Script: jd_wdz.js
+  Script: jd_cjhydz_microDz.js
   TimeOut: 0
   Wait: 10
 - Container:
@@ -151,7 +151,7 @@ js_config:
   - - jd_wdz_openLuckBag_activityId
   - - jd_openLuckBag_Id
   Name: 微定制-开福袋
-  Script: jd_wdz_openLuckBag.js
+  Script: jd_openLuckBag.js
   TimeOut: 0
   Wait: 5
 - Container:
