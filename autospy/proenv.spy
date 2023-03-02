@@ -434,3 +434,30 @@ js_config:
   Script: jd_txzj_lottery.js
   TimeOut: 0
   Wait: 2
+- Container:
+  - []
+  Env: jd_wxUnPackingActivity_activityId
+  KeyWord:
+  - - jd_wxUnPackingActivity_activityId
+  Name: 让福袋飞
+  Script: jd_wxUnPackingActivity.js
+  TimeOut: 0
+  Wait: 2
+- Container:
+  - []
+  Env: jd_lzkj_wxGameActivity_activityId
+  KeyWord:
+  - - jd_lzkj_wxGameActivity_activityId
+  Name: lzkj游戏活动
+  Script: jd_lzkj_wxGameActivity.js
+  TimeOut: 0
+  Wait: 2
+- Container:
+  - []
+  Env: WXGAME_ACT_ID
+  KeyWord:
+  - - WXGAME_ACT_ID
+  Name: LZ店铺通用游戏任务
+  Script: jd_wxgame.js
+  TimeOut: 0
+  Wait: 2
