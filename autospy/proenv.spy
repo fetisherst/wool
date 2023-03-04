@@ -508,3 +508,23 @@ js_config:
   Script: jd_wxgame.js
   TimeOut: 0
   Wait: 2
+  - Container:
+  - []
+  Disable: 0
+  Env: jd_lzkj_interactsaas_rlqd_Ids
+  KeyWord:
+  - - jd_lzkj_interactsaas_rlqd_Ids
+  Name: lzkj_interactsaas日历签到
+  Script: jd_lzkj_interactsaas_rlqd.js
+  TimeOut: 0
+  Wait: 2
+    - Container:
+  - []
+  Disable: 0
+  Env: jd_lzkj_interactsaas_qrqd_Ids
+  KeyWord:
+  - - jd_lzkj_interactsaas_qrqd_Ids
+  Name: lzkj_interactsaas签到
+  Script: jd_lzkj_interactsaas_qrqd.js
+  TimeOut: 0
+  Wait: 2
