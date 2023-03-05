@@ -508,7 +508,7 @@ js_config:
   Script: jd_wxgame.js
   TimeOut: 0
   Wait: 2
-  - Container:
+- Container:
   - []
   Disable: 0
   Env: jd_lzkj_interactsaas_rlqd_Ids
@@ -518,7 +518,7 @@ js_config:
   Script: jd_lzkj_interactsaas_rlqd.js
   TimeOut: 0
   Wait: 2
-    - Container:
+- Container:
   - []
   Disable: 0
   Env: jd_lzkj_interactsaas_qrqd_Ids
@@ -526,5 +526,15 @@ js_config:
   - - jd_lzkj_interactsaas_qrqd_Ids
   Name: lzkj_interactsaas签到
   Script: jd_lzkj_interactsaas_qrqd.js
+  TimeOut: 0
+  Wait: 2
+- Container:
+  - []
+  Disable: 0
+  Env: jd_loreal_interact_ljqdysl_Ids
+  KeyWord:
+  - - jd_loreal_interact_ljqdysl_Ids
+  Name: loreal_interact签到
+  Script: jd_loreal_interact_ljqdysl.js
   TimeOut: 0
   Wait: 2
