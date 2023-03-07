@@ -538,3 +538,13 @@ js_config:
   Script: jd_loreal_interact_ljqdysl.js
   TimeOut: 0
   Wait: 2
+- Container:
+  - []
+  Disable: 0
+  Env: jd_lzkj_interactsaas_glyl_Ids
+  KeyWord:
+  - - jd_lzkj_interactsaas_glyl_Ids
+  Name: lzkj_interactsaas盖楼有礼
+  Script: jd_lzkj_interactsaas_glyl.js
+  TimeOut: 0
+  Wait: 2
