@@ -429,6 +429,7 @@ js_config:
   Env: jd_shop_draw_ids
   KeyWord:
   - - jd_shop_draw_ids
+  - - DPCJID
   Name: 店铺抽奖
   Script: jd_shop_draw.js
   TimeOut: 0
