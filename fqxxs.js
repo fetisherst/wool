@@ -5,6 +5,7 @@
 抓包 cookie的sessionid值&iid&did iid和did可不要
 变量 fqxxsapp
 每天多少次自己决定，其他我不管。。。
+cron: 53 8 * * *
 多账号@或者换行 多号并发限制五个一组，不建议太多号同时跑
 */
 const $ = new Env("番茄小说");
