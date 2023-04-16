@@ -6,7 +6,8 @@ APP：番茄免费小说
 安卓抓包：https://i-hl.snssdk.com/luckycat开头的，在cookie里面找到sessionid，在url里面找到iid和device_id，将sessionid#iid#device_id填入变量，多账号@隔开。
 苹果抓包：https://i.snssdk.com/开头的，在cookie里面找到sessionid，在url里面找到iid和device_id，将sessionid#iid#device_id填入变量，多账号@隔开。
 区别：苹果部分任务是没有的，做不了。安卓比较全
-定时：18 8-22 * * *
+corn：18 8-22 * * *
+new Env('番茄小说');
 每天9点到15点之间跑阅读任务
 ⚠️多账号一定不要在同一台设备抓Ck!⚠️
 ⚠️多账号一定不要在同一台设备抓Ck!⚠️
