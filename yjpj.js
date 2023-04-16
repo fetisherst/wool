@@ -4,6 +4,8 @@
 变量名:yjpjck，随便找一个请求是https://h5.youzan.com的，找到请求头，取请求头里面Extra-Data里的sid和uuid，总#链接，多账号@隔开
 注意⚠️uuid是一串数字字母组成的，倒数13位是时间戳，不要填进变量！！只要前面部分就可以了。
 比如uuid=FmdMpKAeiknJs6O1670565573439,填进变量的只需要FmdMpKAeiknJs6O
+cron: 46 8 * * *
+const $ = new Env("燕京啤酒小程序");
 每天运行一次就好
 */
 const $ = new Env("燕京啤酒小程序");
