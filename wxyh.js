@@ -4,6 +4,8 @@
 完成每日任务，一天50积分左右，可以兑换实物或者各种视频会员
 变量名:wxyhck
 手机号注册登录软件后，抓包http://appapi.chinamcloud.com/api/开头的，找到user_id#token作为变量，多账号用@隔开
+cron: 51 9 * * *
+const $ = new Env("无限玉环");
 定时:一天一次
 我的邀请码:2a53fb 欢迎大家填写！！
 */
