@@ -6,6 +6,8 @@
 登录之后，抓取https://eapp.eastobacco.com/开头的，token填到变量里。多账号用@隔开
 默认不做评论任务，会有人工审核（听说回容易黑）
 需要做评论任务的话就把comment=0改成comment=1
+cron: 53 10 * * *
+new Env('东方烟草报');
 定时:一天一次
 */
 comment = 0
