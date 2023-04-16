@@ -5,6 +5,8 @@
 评论和上互动视频默认不做（因为容易黑）胆子大的可以将脚本中Comment = 0改成Comment = 1
 变量名：nkspck
 登陆软件后，找到https://apigateway.nbs.cn/开头的包，把body里的uid#token填入变量，多账号换行隔开
+cron: 48 9 * * *
+const $ = new Env("牛咔视频");
 定时：每天运行1-2次
 */
 Comment = 0
