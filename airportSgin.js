@@ -2,7 +2,7 @@
 [task_local]
 #机场签到
 new Env('glados');
-cron: 0 7 * * * , tag=机场签到, enabled=true
+cron: 35 17 * * * , tag=机场签到, enabled=true
 机场签到
 多账号@隔开
 格式：token
