@@ -72,7 +72,7 @@ async function main() {
 // Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
 // Cookie:
 //
-// {"token":"glados.network"}
+// {"token":"glados.one"}
 async function sign(cookie){
     return new Promise(resolve => {
         try {
