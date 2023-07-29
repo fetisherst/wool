@@ -87,7 +87,7 @@ async function sign(cookie){
                         "Cookie": cookie,
 
                     },
-                    "body": '{"token":"glados.network"}'
+                    "body": '{"token":"glados.one"}'
                 },
                 function (error, response, body) {
                     console.log(body);
