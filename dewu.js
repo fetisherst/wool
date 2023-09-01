@@ -3,7 +3,7 @@
 
 格式：export dewu="token=Bearer eyJhxxxxxxxx&sk=xxx&ua=Mozilla/5.0 (Linux; Android 10xxxxxxxx"  多账号换行隔开
 
-cron 32 5,36 8,12,18,22 * * ? 每天跑6-8次
+cron 42 5,36 8,12,18,22 * * ? 每天跑6-8次
 
 */
 
