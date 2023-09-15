@@ -3,6 +3,8 @@
  * @Date: 2022-06-23 11:29:02
  * @LastEditTime: 2022-06-23 16:15:12
  * @LastEditors: Hellager
+cron: 33 9 * * *
+const $ = new Env("微博");
  */
 const axios = require('axios');
 const dayjs = require('dayjs');
