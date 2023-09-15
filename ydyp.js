@@ -3,6 +3,8 @@
  * 变量ydyp 抓orches.yun.139.com下的Au不要Basic只要后面那串&手机号码 建议抓小程序貌似切号不会🐔
  * 多账号用 换行 或 @ 分割
  * 每天多把把
+cron: 23 8 * * *
+const $ = new Env("移动云盘");
  */ 
 let cjkq = 0 //是否开启抽奖
 let cjcs = 1 //抽奖首次免费
