@@ -6,10 +6,10 @@
 cron: 23 8 * * *
 const $ = new Env("移动云盘");
  */ 
-let cjkq = 0 //是否开启抽奖
+let cjkq = 1 //是否开启抽奖
 let cjcs = 1 //抽奖首次免费
 
-let yykq = 0//是否开启摇一摇
+let yykq = 1 //是否开启摇一摇
 let yycs = 10 //摇一摇次数
 
 
