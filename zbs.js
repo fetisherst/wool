@@ -7,7 +7,7 @@
 export zbstoken=X-Dts-Token
 多账号用'===='隔开 例 账号1====账号2
 cron：17 8 * * ?
-const $ = new Env("电信营业厅");
+const $ = new Env("植白说官方商城");
 """
 
 import os
