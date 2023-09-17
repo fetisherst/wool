@@ -1,13 +1,10 @@
 /*
- * @Author: lxk0301 https://gitee.com/lxk0301
- * @Date: 2020-08-19 16:12:40
- * @Last Modified by: whyour
- * @Last Modified time: 2021-5-1 15:00:54
+ * @Author: Huansheng1 https://github.com/Huansheng1/my-js-bak
  * sendNotify 推送通知功能
  * @param text 通知头
  * @param desp 通知体
  * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
+ * @param author 作者仓库等信息  例：`本通知 By：https://github.com/Huansheng1/my-js-bak`
  */
 
 const querystring = require('querystring');
@@ -76,10 +73,6 @@ let DD_BOT_TOKEN = '';
 //密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
 let DD_BOT_SECRET = '';
 
-// =======================================企业微信基础设置===========================================
-// 企业微信反向代理地址
-//(环境变量名 QYWX_ORIGIN)
-let QYWX_ORIGIN = '';
 // =======================================企业微信机器人通知设置区域===========================================
 //此处填你企业微信机器人的 webhook(详见文档 https://work.weixin.qq.com/api/doc/90000/90136/91770)，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
 //(环境变量名 QYWX_KEY)
@@ -128,23 +121,6 @@ let AIBOTK_NAME = '';
 //官方文档：https://www.feishu.cn/hc/zh-CN/articles/360024984973
 //FSKEY 飞书机器人的 FSKEY
 let FSKEY = '';
-
-// =======================================SMTP 邮件设置区域=======================================
-// SMTP_SERVER: 填写 SMTP 发送邮件服务器，形如 smtp.exmail.qq.com:465
-// SMTP_SSL: 填写 SMTP 发送邮件服务器是否使用 SSL，内容应为 true 或 false
-// SMTP_EMAIL: 填写 SMTP 收发件邮箱，通知将会由自己发给自己
-// SMTP_PASSWORD: 填写 SMTP 登录密码，也可能为特殊口令，视具体邮件服务商说明而定
-// SMTP_NAME: 填写 SMTP 收发件人姓名，可随意填写
-let SMTP_SERVER = '';
-let SMTP_SSL = 'false';
-let SMTP_EMAIL = '';
-let SMTP_PASSWORD = '';
-let SMTP_NAME = '';
-
-// =======================================PushMe通知设置区域===========================================
-//官方文档：https://push.i-i.me/
-//此处填你的PushMe KEY.
-let PUSHME_KEY = '';
 
 //==========================云端环境变量的判断与接收=========================
 if (process.env.GOTIFY_URL) {
@@ -239,12 +215,6 @@ if (process.env.DD_BOT_TOKEN) {
     }
 }
 
-if (process.env.QYWX_ORIGIN) {
-    QYWX_ORIGIN = process.env.QYWX_ORIGIN;
-} else {
-    QYWX_ORIGIN = 'https://qyapi.weixin.qq.com';
-}
-
 if (process.env.QYWX_KEY) {
     QYWX_KEY = process.env.QYWX_KEY;
 }
@@ -277,25 +247,6 @@ if (process.env.AIBOTK_NAME) {
 if (process.env.FSKEY) {
     FSKEY = process.env.FSKEY;
 }
-
-if (process.env.SMTP_SERVER) {
-    SMTP_SERVER = process.env.SMTP_SERVER;
-}
-if (process.env.SMTP_SSL) {
-    SMTP_SSL = process.env.SMTP_SSL;
-}
-if (process.env.SMTP_EMAIL) {
-    SMTP_EMAIL = process.env.SMTP_EMAIL;
-}
-if (process.env.SMTP_PASSWORD) {
-    SMTP_PASSWORD = process.env.SMTP_PASSWORD;
-}
-if (process.env.SMTP_NAME) {
-    SMTP_NAME = process.env.SMTP_NAME;
-}
-if (process.env.PUSHME_KEY) {
-    PUSHME_KEY = process.env.PUSHME_KEY;
-}
 //==========================云端环境变量的判断与接收=========================
 
 /**
@@ -303,119 +254,40 @@ if (process.env.PUSHME_KEY) {
  * @param text 通知头
  * @param desp 通知体
  * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
+ * @param author 作者仓库等信息  例：`本通知 By：https://github.com/Huansheng1/my-js-bak`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(
+async function sendNotify (
     text,
     desp,
     params = {},
-    author = '\n\n本通知 By：https://github.com/whyour/qinglong',
+    author = '\n\n支持的话，可以看看这里的实惠流量卡，非物流卡哦， 地址：http://www.91haoka.cn/gth/#/minishop?share_id=468272&shop_name=%25E5%2585%25A8%25E7%25BD%2591%25E4%25BC%2598%25E6%2583%25A0%25E5%258D%25A1',
 ) {
-    let pushType = ["smallfawnPushWhite", "smallfawnPushBlack", 'default']
-    /* 判断 黑白名单 或默认模式 */
-    function checkSmallfawnPushType() {
-        if (process.env.hasOwnProperty(pushType[0]) !== false) {
-            return pushType[0];
-        } else if (process.env.hasOwnProperty(pushType[1]) !== false) {
-            return pushType[1];
-        } else {
-            return pushType[2];
-        }
-    }
-    /**
-     * 检测 smallfawnPushWhite 或 smallfawnPushBlack 的变量
-     * @param {*} variable  smallfawnPushWhite 或 smallfawnPushBlack
-     * @returns 数组
-     */
-    function checkSmallfawnPush(variable) {
-        if (typeof variable === 'string') {
-            if (variable.includes('&') || variable.includes('#') || variable.includes('@')) {
-                return variable.split(/[&#@]/);
-            } else {
-                return [variable];
-            }
-        } else if (typeof variable === 'number') {
-            return [variable.toString()];
-        } else {
-            return [];
-        }
-    }
-
-    let type = checkSmallfawnPushType()
-
-    console.log(`\n\n============================================`)
-    // 主要 //
-    //判断是否是默认通知方式
-    if (type !== pushType[2]) {
-        //判断数组长度
-        if (checkSmallfawnPush(process.env[type]).length == 0) {
-            console.log(`通知变量[${type}] 无变量值 默认形式发送 脚本名字[${text}]\n如果需要请填写脚本名字到通知变量  @或&或#为 分隔符`);
-            await push()
-        } else {
-            //判断黑白名单模式
-            if (type == pushType[0]) {
-                console.log(`通知变量为白名单模式`);
-                if (checkSmallfawnPush(process.env[pushType[0]]).includes(text)) {
-                    console.log(`脚本名字[${text}] 在 通知变量白名单[${type}] 变量中 => 通知`);
-                    await push();
-                } else {
-                    console.log(`脚本名字[${text}] 不在 通知变量白名单[${type}] 变量中 => 不通知`)
-                }
-            } else if (type == pushType[1]) {
-                console.log(`通知变量为黑名单模式`);
-                if (checkSmallfawnPush(process.env[pushType[1]]).includes(text)) {
-                    console.log(`脚本名字[${text}] 在 通知变量黑名单[${type}] 变量中 => 不通知`);
-                } else {
-                    console.log(`脚本名字[${text}] 不在 通知变量黑名单[${type}] 变量中 => 通知`)
-                    await push();
-                }
-            }
-        }
-    } else {
-        console.log(`无黑白名单变量 默认形式发送 脚本名字[${text}]`);
-        console.log(`如需配置通知黑白名单请在环境变量或配置文件 添加变量白名单 ${pushType[0]} 或 黑名单 ${pushType[1]}二选一 @或&或#为 分隔符 填写脚本名字`);
-        await push()
-    }
-
-    async function push() {
-        //提供6种通知
-        desp += author; //增加作者信息，防止被贩卖等
-
-        // 根据标题跳过一些消息推送，环境变量：SKIP_PUSH_TITLE 用回车分隔
-        let skipTitle = process.env.SKIP_PUSH_TITLE;
-        if (skipTitle) {
-            if (skipTitle.split('\n').includes(text)) {
-                console.info(text + '在SKIP_PUSH_TITLE环境变量内，跳过推送！');
-                return;
-            }
-        }
-
-        await Promise.all([
-            serverNotify(text, desp), //微信server酱
-            pushPlusNotify(text, desp), //pushplus(推送加)
-        ]);
-        //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
-        text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
-        await Promise.all([
-            BarkNotify(text, desp, params), //iOS Bark APP
-            tgBotNotify(text, desp), //telegram 机器人
-            ddBotNotify(text, desp), //钉钉机器人
-            qywxBotNotify(text, desp), //企业微信机器人
-            qywxamNotify(text, desp), //企业微信应用消息推送
-            iGotNotify(text, desp, params), //iGot
-            gobotNotify(text, desp), //go-cqhttp
-            gotifyNotify(text, desp), //gotify
-            ChatNotify(text, desp), //synolog chat
-            PushDeerNotify(text, desp), //PushDeer
-            aibotkNotify(text, desp), //智能微秘书
-            fsBotNotify(text, desp), //飞书机器人
-            smtpNotify(text, desp), //SMTP 邮件
-        ]);
-    }
+    //提供6种通知
+    desp += author; //增加作者信息，防止被贩卖等
+    await Promise.all([
+        serverNotify(text, desp), //微信server酱
+        pushPlusNotify(text, desp), //pushplus(推送加)
+    ]);
+    //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
+    text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
+    await Promise.all([
+        BarkNotify(text, desp, params), //iOS Bark APP
+        tgBotNotify(text, desp), //telegram 机器人
+        ddBotNotify(text, desp), //钉钉机器人
+        qywxBotNotify(text, desp), //企业微信机器人
+        qywxamNotify(text, desp), //企业微信应用消息推送
+        iGotNotify(text, desp, params), //iGot
+        gobotNotify(text, desp), //go-cqhttp
+        gotifyNotify(text, desp), //gotify
+        ChatNotify(text, desp), //synolog chat
+        PushDeerNotify(text, desp), //PushDeer
+        aibotkNotify(text, desp), //智能微秘书
+        fsBotNotify(text, desp), //飞书机器人
+    ]);
 }
 
-function gotifyNotify(text, desp) {
+function gotifyNotify (text, desp) {
     return new Promise((resolve) => {
         if (GOTIFY_URL && GOTIFY_TOKEN) {
             const options = {
@@ -452,7 +324,7 @@ function gotifyNotify(text, desp) {
     });
 }
 
-function gobotNotify(text, desp) {
+function gobotNotify (text, desp) {
     return new Promise((resolve) => {
         if (GOBOT_URL) {
             const options = {
@@ -490,7 +362,7 @@ function gobotNotify(text, desp) {
     });
 }
 
-function serverNotify(text, desp) {
+function serverNotify (text, desp) {
     return new Promise((resolve) => {
         if (SCKEY) {
             //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
@@ -534,7 +406,7 @@ function serverNotify(text, desp) {
     });
 }
 
-function PushDeerNotify(text, desp) {
+function PushDeerNotify (text, desp) {
     return new Promise((resolve) => {
         if (PUSHDEER_KEY) {
             // PushDeer 建议对消息内容进行 urlencode
@@ -576,7 +448,7 @@ function PushDeerNotify(text, desp) {
     });
 }
 
-function ChatNotify(text, desp) {
+function ChatNotify (text, desp) {
     return new Promise((resolve) => {
         if (CHAT_URL && CHAT_TOKEN) {
             // 对消息内容进行 urlencode
@@ -613,13 +485,13 @@ function ChatNotify(text, desp) {
     });
 }
 
-function BarkNotify(text, desp, params = {}) {
+function BarkNotify (text, desp, params = {}) {
     return new Promise((resolve) => {
         if (BARK_PUSH) {
             const options = {
                 url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(
                     desp,
-                )}?icon=${BARK_ICON}&sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(
+                )}?icon=${BARK_ICON}?sound=${BARK_SOUND}&group=${BARK_GROUP}&${querystring.stringify(
                     params,
                 )}`,
                 headers: {
@@ -652,7 +524,7 @@ function BarkNotify(text, desp, params = {}) {
     });
 }
 
-function tgBotNotify(text, desp) {
+function tgBotNotify (text, desp) {
     return new Promise((resolve) => {
         if (TG_BOT_TOKEN && TG_USER_ID) {
             const options = {
@@ -708,7 +580,7 @@ function tgBotNotify(text, desp) {
         }
     });
 }
-function ddBotNotify(text, desp) {
+function ddBotNotify (text, desp) {
     return new Promise((resolve) => {
         const options = {
             url: `https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}`,
@@ -775,10 +647,10 @@ function ddBotNotify(text, desp) {
     });
 }
 
-function qywxBotNotify(text, desp) {
+function qywxBotNotify (text, desp) {
     return new Promise((resolve) => {
         const options = {
-            url: `${QYWX_ORIGIN}/cgi-bin/webhook/send?key=${QYWX_KEY}`,
+            url: `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=${QYWX_KEY}`,
             json: {
                 msgtype: 'text',
                 text: {
@@ -816,7 +688,7 @@ function qywxBotNotify(text, desp) {
     });
 }
 
-function ChangeUserId(desp) {
+function ChangeUserId (desp) {
     const QYWX_AM_AY = QYWX_AM.split(',');
     if (QYWX_AM_AY[2]) {
         const userIdTmp = QYWX_AM_AY[2].split('|');
@@ -835,12 +707,12 @@ function ChangeUserId(desp) {
     }
 }
 
-function qywxamNotify(text, desp) {
+function qywxamNotify (text, desp) {
     return new Promise((resolve) => {
         if (QYWX_AM) {
             const QYWX_AM_AY = QYWX_AM.split(',');
             const options_accesstoken = {
-                url: `${QYWX_ORIGIN}/cgi-bin/gettoken`,
+                url: `https://qyapi.weixin.qq.com/cgi-bin/gettoken`,
                 json: {
                     corpid: `${QYWX_AM_AY[0]}`,
                     corpsecret: `${QYWX_AM_AY[1]}`,
@@ -905,7 +777,7 @@ function qywxamNotify(text, desp) {
                     };
                 }
                 options = {
-                    url: `${QYWX_ORIGIN}/cgi-bin/message/send?access_token=${accesstoken}`,
+                    url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
                     json: {
                         touser: `${ChangeUserId(desp)}`,
                         agentid: `${QYWX_AM_AY[3]}`,
@@ -951,7 +823,7 @@ function qywxamNotify(text, desp) {
     });
 }
 
-function iGotNotify(text, desp, params = {}) {
+function iGotNotify (text, desp, params = {}) {
     return new Promise((resolve) => {
         if (IGOT_PUSH_KEY) {
             // 校验传入的IGOT_PUSH_KEY是否有效
@@ -994,7 +866,7 @@ function iGotNotify(text, desp, params = {}) {
     });
 }
 
-function pushPlusNotify(text, desp) {
+function pushPlusNotify (text, desp) {
     return new Promise((resolve) => {
         if (PUSH_PLUS_TOKEN) {
             desp = desp.replace(/[\n\r]/g, '<br>'); // 默认为html, 不支持plaintext
@@ -1046,7 +918,7 @@ function pushPlusNotify(text, desp) {
     });
 }
 
-function aibotkNotify(text, desp) {
+function aibotkNotify (text, desp) {
     return new Promise((resolve) => {
         if (AIBOTK_KEY && AIBOTK_TYPE && AIBOTK_NAME) {
             let json = {};
@@ -1108,7 +980,7 @@ function aibotkNotify(text, desp) {
     });
 }
 
-function fsBotNotify(text, desp) {
+function fsBotNotify (text, desp) {
     return new Promise((resolve) => {
         if (FSKEY) {
             const options = {
@@ -1144,91 +1016,10 @@ function fsBotNotify(text, desp) {
     });
 }
 
-async function smtpNotify(text, desp) {
-    if (![SMTP_SERVER, SMTP_EMAIL, SMTP_PASSWORD].every(Boolean)) {
-        return;
-    }
-
-    try {
-        const nodemailer = require('nodemailer');
-        const transporter = nodemailer.createTransport(
-            `${SMTP_SSL === 'true' ? 'smtps:' : 'smtp:'}//${SMTP_SERVER}`,
-            {
-                auth: {
-                    user: SMTP_EMAIL,
-                    pass: SMTP_PASSWORD,
-                },
-            },
-        );
-
-        const addr = SMTP_NAME ? `"${SMTP_NAME}" <${SMTP_EMAIL}>` : SMTP_EMAIL;
-        const info = await transporter.sendMail({
-            from: addr,
-            to: addr,
-            subject: text,
-            text: desp,
-        });
-
-        if (!!info.messageId) {
-            console.log('SMTP发送通知消息成功🎉\n');
-            return true;
-        }
-        console.log('SMTP发送通知消息失败！！\n');
-    } catch (e) {
-        console.log('SMTP发送通知消息出现错误！！\n');
-        console.log(e);
-    }
-}
-
-function smtpNotify(text, desp) {
-    return new Promise((resolve) => {
-        if (SMTP_SERVER && SMTP_SSL && SMTP_EMAIL && SMTP_PASSWORD && SMTP_NAME) {
-            // todo: Node.js并没有内置的 smtp 实现，需要调用外部库，因为不清楚这个文件的模块依赖情况，所以留给有缘人实现
-        } else {
-            resolve();
-        }
-    });
-}
-
-function PushMeNotify(text, desp) {
-    return new Promise((resolve) => {
-        if (PUSHME_KEY) {
-            const options = {
-                url: `https://push.i-i.me?push_key=${PUSHME_KEY}`,
-                json: { title: text, content: desp },
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                timeout,
-            };
-            $.post(options, (err, resp, data) => {
-                try {
-                    if (err) {
-                        console.log('PushMeNotify发送通知调用API失败！！\n');
-                        console.log(err);
-                    } else {
-                        if (data === 'success') {
-                            console.log('PushMe发送通知消息成功🎉\n');
-                        } else {
-                            console.log(`${data}\n`);
-                        }
-                    }
-                } catch (e) {
-                    $.logErr(e, resp);
-                } finally {
-                    resolve(data);
-                }
-            });
-        } else {
-            resolve();
-        }
-    });
-}
-
 module.exports = {
     sendNotify,
     BARK_PUSH,
 };
 
 // prettier-ignore
-function Env(t, s) { return new class { constructor(t, s) { this.name = t, this.data = null, this.dataFile = "box.dat", this.logs = [], this.logSeparator = "\n", this.startTime = (new Date).getTime(), Object.assign(this, s), this.log("", `\ud83d\udd14${this.name}, \u5f00\u59cb!`) } isNode() { return "undefined" != typeof module && !!module.exports } isQuanX() { return "undefined" != typeof $task } isSurge() { return "undefined" != typeof $httpClient && "undefined" == typeof $loon } isLoon() { return "undefined" != typeof $loon } getScript(t) { return new Promise(s => { $.get({ url: t }, (t, e, i) => s(i)) }) } runScript(t, s) { return new Promise(e => { let i = this.getdata("@chavy_boxjs_userCfgs.httpapi"); i = i ? i.replace(/\n/g, "").trim() : i; let o = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout"); o = o ? 1 * o : 20, o = s && s.timeout ? s.timeout : o; const [h, a] = i.split("@"), r = { url: `http://${a}/v1/scripting/evaluate`, body: { script_text: t, mock_type: "cron", timeout: o }, headers: { "X-Key": h, Accept: "*/*" } }; $.post(r, (t, s, i) => e(i)) }).catch(t => this.logErr(t)) } loaddata() { if (!this.isNode()) return {}; { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile), s = this.path.resolve(process.cwd(), this.dataFile), e = this.fs.existsSync(t), i = !e && this.fs.existsSync(s); if (!e && !i) return {}; { const i = e ? t : s; try { return JSON.parse(this.fs.readFileSync(i)) } catch (t) { return {} } } } } writedata() { if (this.isNode()) { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile), s = this.path.resolve(process.cwd(), this.dataFile), e = this.fs.existsSync(t), i = !e && this.fs.existsSync(s), o = JSON.stringify(this.data); e ? this.fs.writeFileSync(t, o) : i ? this.fs.writeFileSync(s, o) : this.fs.writeFileSync(t, o) } } lodash_get(t, s, e) { const i = s.replace(/\[(\d+)\]/g, ".$1").split("."); let o = t; for (const t of i) if (o = Object(o)[t], void 0 === o) return e; return o } lodash_set(t, s, e) { return Object(t) !== t ? t : (Array.isArray(s) || (s = s.toString().match(/[^.[\]]+/g) || []), s.slice(0, -1).reduce((t, e, i) => Object(t[e]) === t[e] ? t[e] : t[e] = Math.abs(s[i + 1]) >> 0 == +s[i + 1] ? [] : {}, t)[s[s.length - 1]] = e, t) } getdata(t) { let s = this.getval(t); if (/^@/.test(t)) { const [, e, i] = /^@(.*?)\.(.*?)$/.exec(t), o = e ? this.getval(e) : ""; if (o) try { const t = JSON.parse(o); s = t ? this.lodash_get(t, i, "") : s } catch (t) { s = "" } } return s } setdata(t, s) { let e = !1; if (/^@/.test(s)) { const [, i, o] = /^@(.*?)\.(.*?)$/.exec(s), h = this.getval(i), a = i ? "null" === h ? null : h || "{}" : "{}"; try { const s = JSON.parse(a); this.lodash_set(s, o, t), e = this.setval(JSON.stringify(s), i) } catch (s) { const h = {}; this.lodash_set(h, o, t), e = this.setval(JSON.stringify(h), i) } } else e = $.setval(t, s); return e } getval(t) { return this.isSurge() || this.isLoon() ? $persistentStore.read(t) : this.isQuanX() ? $prefs.valueForKey(t) : this.isNode() ? (this.data = this.loaddata(), this.data[t]) : this.data && this.data[t] || null } setval(t, s) { return this.isSurge() || this.isLoon() ? $persistentStore.write(t, s) : this.isQuanX() ? $prefs.setValueForKey(t, s) : this.isNode() ? (this.data = this.loaddata(), this.data[s] = t, this.writedata(), !0) : this.data && this.data[s] || null } initGotEnv(t) { this.got = this.got ? this.got : require("got"), this.cktough = this.cktough ? this.cktough : require("tough-cookie"), this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar, t && (t.headers = t.headers ? t.headers : {}, void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar)) } get(t, s = (() => { })) { t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? $httpClient.get(t, (t, e, i) => { !t && e && (e.body = i, e.statusCode = e.status), s(t, e, i) }) : this.isQuanX() ? $task.fetch(t).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, s) => { try { const e = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString(); this.ckjar.setCookieSync(e, null), s.cookieJar = this.ckjar } catch (t) { this.logErr(t) } }).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t))) } post(t, s = (() => { })) { if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) $httpClient.post(t, (t, e, i) => { !t && e && (e.body = i, e.statusCode = e.status), s(t, e, i) }); else if (this.isQuanX()) t.method = "POST", $task.fetch(t).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)); else if (this.isNode()) { this.initGotEnv(t); const { url: e, ...i } = t; this.got.post(e, i).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)) } } time(t) { let s = { "M+": (new Date).getMonth() + 1, "d+": (new Date).getDate(), "H+": (new Date).getHours(), "m+": (new Date).getMinutes(), "s+": (new Date).getSeconds(), "q+": Math.floor(((new Date).getMonth() + 3) / 3), S: (new Date).getMilliseconds() }; /(y+)/.test(t) && (t = t.replace(RegExp.$1, ((new Date).getFullYear() + "").substr(4 - RegExp.$1.length))); for (let e in s) new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, 1 == RegExp.$1.length ? s[e] : ("00" + s[e]).substr(("" + s[e]).length))); return t } msg(s = t, e = "", i = "", o) { const h = t => !t || !this.isLoon() && this.isSurge() ? t : "string" == typeof t ? this.isLoon() ? t : this.isQuanX() ? { "open-url": t } : void 0 : "object" == typeof t && (t["open-url"] || t["media-url"]) ? this.isLoon() ? t["open-url"] : this.isQuanX() ? t : void 0 : void 0; $.isMute || (this.isSurge() || this.isLoon() ? $notification.post(s, e, i, h(o)) : this.isQuanX() && $notify(s, e, i, h(o))), this.logs.push("", "==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="), this.logs.push(s), e && this.logs.push(e), i && this.logs.push(i) } log(...t) { t.length > 0 ? this.logs = [...this.logs, ...t] : console.log(this.logs.join(this.logSeparator)) } logErr(t, s) { const e = !this.isSurge() && !this.isQuanX() && !this.isLoon(); e ? $.log("", `\u2757\ufe0f${this.name}, \u9519\u8bef!`, t.stack) : $.log("", `\u2757\ufe0f${this.name}, \u9519\u8bef!`, t) } wait(t) { return new Promise(s => setTimeout(s, t)) } done(t = {}) { const s = (new Date).getTime(), e = (s - this.startTime) / 1e3; this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`), this.log(), (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t) } }(t, s) }
+function Env (t, s) { return new class { constructor(t, s) { this.name = t, this.data = null, this.dataFile = "box.dat", this.logs = [], this.logSeparator = "\n", this.startTime = (new Date).getTime(), Object.assign(this, s), this.log("", `\ud83d\udd14${this.name}, \u5f00\u59cb!`) } isNode () { return "undefined" != typeof module && !!module.exports } isQuanX () { return "undefined" != typeof $task } isSurge () { return "undefined" != typeof $httpClient && "undefined" == typeof $loon } isLoon () { return "undefined" != typeof $loon } getScript (t) { return new Promise(s => { $.get({ url: t }, (t, e, i) => s(i)) }) } runScript (t, s) { return new Promise(e => { let i = this.getdata("@chavy_boxjs_userCfgs.httpapi"); i = i ? i.replace(/\n/g, "").trim() : i; let o = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout"); o = o ? 1 * o : 20, o = s && s.timeout ? s.timeout : o; const [h, a] = i.split("@"), r = { url: `http://${a}/v1/scripting/evaluate`, body: { script_text: t, mock_type: "cron", timeout: o }, headers: { "X-Key": h, Accept: "*/*" } }; $.post(r, (t, s, i) => e(i)) }).catch(t => this.logErr(t)) } loaddata () { if (!this.isNode()) return {}; { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile), s = this.path.resolve(process.cwd(), this.dataFile), e = this.fs.existsSync(t), i = !e && this.fs.existsSync(s); if (!e && !i) return {}; { const i = e ? t : s; try { return JSON.parse(this.fs.readFileSync(i)) } catch (t) { return {} } } } } writedata () { if (this.isNode()) { this.fs = this.fs ? this.fs : require("fs"), this.path = this.path ? this.path : require("path"); const t = this.path.resolve(this.dataFile), s = this.path.resolve(process.cwd(), this.dataFile), e = this.fs.existsSync(t), i = !e && this.fs.existsSync(s), o = JSON.stringify(this.data); e ? this.fs.writeFileSync(t, o) : i ? this.fs.writeFileSync(s, o) : this.fs.writeFileSync(t, o) } } lodash_get (t, s, e) { const i = s.replace(/\[(\d+)\]/g, ".$1").split("."); let o = t; for (const t of i) if (o = Object(o)[t], void 0 === o) return e; return o } lodash_set (t, s, e) { return Object(t) !== t ? t : (Array.isArray(s) || (s = s.toString().match(/[^.[\]]+/g) || []), s.slice(0, -1).reduce((t, e, i) => Object(t[e]) === t[e] ? t[e] : t[e] = Math.abs(s[i + 1]) >> 0 == +s[i + 1] ? [] : {}, t)[s[s.length - 1]] = e, t) } getdata (t) { let s = this.getval(t); if (/^@/.test(t)) { const [, e, i] = /^@(.*?)\.(.*?)$/.exec(t), o = e ? this.getval(e) : ""; if (o) try { const t = JSON.parse(o); s = t ? this.lodash_get(t, i, "") : s } catch (t) { s = "" } } return s } setdata (t, s) { let e = !1; if (/^@/.test(s)) { const [, i, o] = /^@(.*?)\.(.*?)$/.exec(s), h = this.getval(i), a = i ? "null" === h ? null : h || "{}" : "{}"; try { const s = JSON.parse(a); this.lodash_set(s, o, t), e = this.setval(JSON.stringify(s), i) } catch (s) { const h = {}; this.lodash_set(h, o, t), e = this.setval(JSON.stringify(h), i) } } else e = $.setval(t, s); return e } getval (t) { return this.isSurge() || this.isLoon() ? $persistentStore.read(t) : this.isQuanX() ? $prefs.valueForKey(t) : this.isNode() ? (this.data = this.loaddata(), this.data[t]) : this.data && this.data[t] || null } setval (t, s) { return this.isSurge() || this.isLoon() ? $persistentStore.write(t, s) : this.isQuanX() ? $prefs.setValueForKey(t, s) : this.isNode() ? (this.data = this.loaddata(), this.data[s] = t, this.writedata(), !0) : this.data && this.data[s] || null } initGotEnv (t) { this.got = this.got ? this.got : require("got"), this.cktough = this.cktough ? this.cktough : require("tough-cookie"), this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar, t && (t.headers = t.headers ? t.headers : {}, void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar)) } get (t, s = (() => { })) { t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]), this.isSurge() || this.isLoon() ? $httpClient.get(t, (t, e, i) => { !t && e && (e.body = i, e.statusCode = e.status), s(t, e, i) }) : this.isQuanX() ? $task.fetch(t).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, s) => { try { const e = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString(); this.ckjar.setCookieSync(e, null), s.cookieJar = this.ckjar } catch (t) { this.logErr(t) } }).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t))) } post (t, s = (() => { })) { if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) $httpClient.post(t, (t, e, i) => { !t && e && (e.body = i, e.statusCode = e.status), s(t, e, i) }); else if (this.isQuanX()) t.method = "POST", $task.fetch(t).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)); else if (this.isNode()) { this.initGotEnv(t); const { url: e, ...i } = t; this.got.post(e, i).then(t => { const { statusCode: e, statusCode: i, headers: o, body: h } = t; s(null, { status: e, statusCode: i, headers: o, body: h }, h) }, t => s(t)) } } time (t) { let s = { "M+": (new Date).getMonth() + 1, "d+": (new Date).getDate(), "H+": (new Date).getHours(), "m+": (new Date).getMinutes(), "s+": (new Date).getSeconds(), "q+": Math.floor(((new Date).getMonth() + 3) / 3), S: (new Date).getMilliseconds() }; /(y+)/.test(t) && (t = t.replace(RegExp.$1, ((new Date).getFullYear() + "").substr(4 - RegExp.$1.length))); for (let e in s) new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, 1 == RegExp.$1.length ? s[e] : ("00" + s[e]).substr(("" + s[e]).length))); return t } msg (s = t, e = "", i = "", o) { const h = t => !t || !this.isLoon() && this.isSurge() ? t : "string" == typeof t ? this.isLoon() ? t : this.isQuanX() ? { "open-url": t } : void 0 : "object" == typeof t && (t["open-url"] || t["media-url"]) ? this.isLoon() ? t["open-url"] : this.isQuanX() ? t : void 0 : void 0; $.isMute || (this.isSurge() || this.isLoon() ? $notification.post(s, e, i, h(o)) : this.isQuanX() && $notify(s, e, i, h(o))), this.logs.push("", "==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="), this.logs.push(s), e && this.logs.push(e), i && this.logs.push(i) } log (...t) { t.length > 0 ? this.logs = [...this.logs, ...t] : console.log(this.logs.join(this.logSeparator)) } logErr (t, s) { const e = !this.isSurge() && !this.isQuanX() && !this.isLoon(); e ? $.log("", `\u2757\ufe0f${this.name}, \u9519\u8bef!`, t.stack) : $.log("", `\u2757\ufe0f${this.name}, \u9519\u8bef!`, t) } wait (t) { return new Promise(s => setTimeout(s, t)) } done (t = {}) { const s = (new Date).getTime(), e = (s - this.startTime) / 1e3; this.log("", `\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`), this.log(), (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t) } }(t, s) }
