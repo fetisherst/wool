@@ -44,9 +44,6 @@ ql repo https://github.com/fetisherst/wool.git "" "sendNotify.js|utils.js|SendNo
 
 见各个脚本 头部描述
 
-### 投稿说明
-
-请前往 [discussions](https://github.com/Huansheng1/my-qinglong-js/discussions/2) 查看要求，按说明投递
 
 ### 报错提示
 1. `/ql/data/config/config.sh: line xxx`：`这种基本都是配置文件里的数据配错了，导致qinglong读取环境变量直接崩了，请检查是否多了空格或者格式不合法`
