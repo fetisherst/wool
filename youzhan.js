@@ -1,6 +1,7 @@
 /**
  * 有赞店铺签到 v0.01（网页）
  * cron 9 9,16 * * *  youzhan.js
+ * const $ = new Env("有赞店铺签到");
  * ========= 青龙--配置文件 ===========
  * # 项目名称
  * export youzan_cookie='完整的cookie'
