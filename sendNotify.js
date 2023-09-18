@@ -261,7 +261,7 @@ async function sendNotify (
     text,
     desp,
     params = {},
-    author = '\n\n支持的话，可以看看这里的实惠流量卡，非物流卡哦， 地址：http://www.91haoka.cn/gth/#/minishop?share_id=468272&shop_name=%25E5%2585%25A8%25E7%25BD%2591%25E4%25BC%2598%25E6%2583%25A0%25E5%258D%25A1',
+    author = '\n\n atman',
 ) {
     //提供6种通知
     desp += author; //增加作者信息，防止被贩卖等
