@@ -1,6 +1,6 @@
 /**
  * 掌上温岭
- * 执行时间： 25 10,16 * * *  掌上温岭.js
+ * 执行时间： 5 11,15 * * *  掌上温岭.js
  * const $ = new Env("掌上温岭");
  * 注册地址：https://app.tmuyun.com/webChannels/invite?inviteCode=W8F6Z8&tenantId=3&accountId=64c9aba2d859cc0486d80fc3
  * ========= 青龙--配置文件 ===========
