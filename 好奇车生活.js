@@ -1,6 +1,6 @@
 /**
  * 好奇车生活V1.2
- * cron: 0 8,18 * * *
+ * cron: 50 8,18 * * *
  * const $ = new Env("好奇车生活");
  * export hqcsh_data="openId&accountId"
  * 
