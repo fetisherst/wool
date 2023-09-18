@@ -1,6 +1,6 @@
 /**
  * 掌上鹿城
- * 执行时间： 25 10,16 * * *  掌上鹿城.js
+ * 执行时间： 25 11,15 * * *  掌上鹿城.js
  * const $ = new Env("掌上鹿城");
  * 注册地址：https://appshare.66lc.com/webChannels/invite?inviteCode=HNQSC9&tenantId=28&accountId=647b32668bee4a66b9b1e82b
  * ========= 青龙--配置文件 ===========
