@@ -1,6 +1,7 @@
 /*
 @蛋炒饭
 软件:沙龙汽车
+* const $ = new Env("沙龙汽车");
 功能:完成签到、浏览、点赞、分享日常任务，每天25积分左右
 变量名:slqcck
 注册登录之后进入页面开始抓包，随便点点，找到https://api.saloontech.cn/开头的包，请求头里面x-user-token#access_token的值作为变量，多账号&隔开
