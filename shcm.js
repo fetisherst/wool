@@ -1,6 +1,7 @@
 /*
 @蛋炒饭
 软件:上海崇明
+* const $ = new Env("上海崇明");
 功能:完成日常任务，每天30积分左右
 变量名:shcmck
 注册登录之后进入页面开始抓包，随便点点，找到https://cmapi.shmedia.tech/media-basic-port/api开头的包，请求头里面token的值作为变量，多账号&隔开
