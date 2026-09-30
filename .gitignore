@@ -1,4 +1,16 @@
+# Node
 node_modules/
 *.log
+npm-debug.log*
+
+# 凭据 / 环境变量（本地专用，勿提交）
 env.json
+
+# AI agent 本地说明文件
 AGENTS.md
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
