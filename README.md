@@ -2,40 +2,54 @@
 
 ## 脚本清单
 
-位于 `scripts/` 目录，每个脚本对应一个 App / 小程序的签到或任务：
+位于 `scripts/` 目录，按分类存放：
+
+- `news/` — 新闻资讯类 App 签到任务
 
 | 应用 | 说明 |
 |---|---|
 | 爱海盐 | 每日任务，积分兑换实物 |
 | 多娇江山 | 每日签到任务 |
-| 番茄免费小说 | 每日任务 |
-| 番茄小说 | 看书/听书/漫画/广告等任务 |
-| 高佣联盟-农场 | 农场任务 |
-| 高佣联盟-养猫咪 | 养猫咪任务 |
 | 看余杭 | 每日签到任务 |
 | 仑传 | 每日签到任务 |
-| 蜜雪冰城 | 每日任务 |
 | 牛咔视频 | 每日签到任务 |
 | 无锡观察 | 每日签到任务 |
 | 无限玉环 | 每日签到任务 |
 | 新湖南 | 每日签到任务 |
-| 香飘飘Home+ | 看视频/玩游戏抽奖 |
 | 运动柯城 | 每日签到任务 |
 | 燕京啤酒 | 签到得积分，兑实物 |
 
-公用文件：`sendNotify.js` / `notify.py`（推送通知）、`env.json`（环境变量示例）。
+- `game/` — 游戏/小说类任务
+
+| 应用 | 说明 |
+|---|---|
+| 番茄免费小说 | 每日任务 |
+| 番茄小说 | 看书/听书/漫画/广告等任务 |
+| 高佣联盟-农场 | 农场任务 |
+| 高佣联盟-养猫咪 | 养猫咪任务 |
+
+- `shop/` — 商城/品牌类任务
+
+| 应用 | 说明 |
+|---|---|
+| 蜜雪冰城 | 每日任务 |
+| 香飘飘Home+ | 看视频/玩游戏抽奖 |
+
+- 根目录：`gitcode.js`（GitCode 积分任务）
+- 公用文件：`sendNotify.js` / `notify.py`（推送通知）
 
 ## 青龙订阅
 
 在青龙面板「定时任务 → 订阅管理」新建订阅，或容器内执行：
 
 ```bash
-ql repo https://github.com/fetisherst/wool.git "" "sendNotify|notify\.py|package\.json|pnpm-lock|env\.json|root\.json|untitled\.json" "^scripts/"
+ql repo https://github.com/fetisherst/wool.git "^(news|game|shop)/" "notify\.py" "sendNotify" "main"
 ```
 
-- 第 2 参数（白名单）：留空，拉取全部任务脚本
-- 第 3 参数（黑名单）：排除公用通知脚本和配置文件
-- 第 4 参数（前缀）：`^scripts/`，脚本均在 `scripts/` 子目录
+- 第 2 参数（白名单）：`^(news|game|shop)/`，只拉取三个任务目录
+- 第 3 参数（黑名单）：排除 `notify.py`
+- 第 4 参数（依赖文件）：`sendNotify`（不建任务）
+- 第 5 参数：分支 `main`
 
 私有仓库需在 URL 中携带 PAT：`https://<TOKEN>@github.com/fetisherst/wool.git`。
 
