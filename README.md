@@ -25,6 +25,20 @@
 
 公用文件：`sendNotify.js` / `notify.py`（推送通知）、`env.json`（环境变量示例）。
 
+## 青龙订阅
+
+在青龙面板「定时任务 → 订阅管理」新建订阅，或容器内执行：
+
+```bash
+ql repo https://github.com/fetisherst/wool.git "" "sendNotify|notify\.py|package\.json|pnpm-lock|env\.json|root\.json|untitled\.json" "^scripts/"
+```
+
+- 第 2 参数（白名单）：留空，拉取全部任务脚本
+- 第 3 参数（黑名单）：排除公用通知脚本和配置文件
+- 第 4 参数（前缀）：`^scripts/`，脚本均在 `scripts/` 子目录
+
+私有仓库需在 URL 中携带 PAT：`https://<TOKEN>@github.com/fetisherst/wool.git`。
+
 ## 免责声明
 
 本项目仅供学习和测试使用，请勿用于任何商业用途或非法活动。

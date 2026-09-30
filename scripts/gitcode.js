@@ -156,11 +156,16 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
   }
 
   // 6. 复查
+  let summary = '';
   try {
     const d = await req('GET', `${BASE}/uc/api/v1/task?page=1&per_page=20&task_level=4&type=1`);
     const list = d?.content || [];
     const remain = list.filter(t => t.status === 2);
     const earned = list.filter(t => t.status !== 2).reduce((s, t) => s + t.score, 0);
-    console.log(remain.length ? `剩余 ${remain.length} 个: ${remain.map(t => `${t.cn_name}(${t.score}分)`).join(' / ')} | 本轮已得 ${earned} 分` : `🎉 全部完成! 本轮共 ${earned} 分`);
+    summary = remain.length ? `剩余 ${remain.length} 个: ${remain.map(t => `${t.cn_name}(${t.score}分)`).join(' / ')} | 本轮已得 ${earned} 分` : `🎉 全部完成! 本轮共 ${earned} 分`;
+    console.log(summary);
   } catch (e) { console.log('⚠️ 复查失败:', e.status); }
+
+  // 7. 推送本轮结果
+  await notify('GitCode 积分脚本', (log.length ? '本轮完成: ' + log.join(', ') + '\n' : '') + (summary || '复查失败，详见日志'));
 })();
